@@ -1,0 +1,11 @@
+{
+	"id": "mike-plugin",
+	"name": "Mike's IA Plugin",
+	"version": "1.0.0",
+	"minAppVersion": "0.15.0",
+	"description": "Asistente IA para toma de notas diarias.",
+	"author": "Mike Ballesteros",
+	"authorUrl": "https://maballesteros.com",
+	"fundingUrl": "https://maballesteros.com",
+	"isDesktopOnly": false
+}
