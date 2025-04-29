@@ -1,115 +1,115 @@
-# Mike's IA Plugin
+# Mike's AI Plugin
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Mike's IA Plugin es un plugin para [Obsidian](https://obsidian.md/) que actúa como un asistente de inteligencia artificial para la toma de notas diarias y la interacción con el modelo de OpenAI. Con este plugin, puedes chatear con un asistente experto que utiliza la API de OpenAI para responder tus preguntas y, además, crear notas diarias de manera automática.
+Mike's AI Plugin is a plugin for [Obsidian](https://obsidian.md/) that serves as an artificial intelligence assistant for daily note-taking and interacting with the OpenAI model. With this plugin, you can chat with an expert assistant using the OpenAI API to answer your questions and automatically create daily notes.
 
-## Tabla de contenidos
+## Table of Contents
 
-- [Características](#caracteristicas)
-- [Instalación](#instalacion)
-- [Uso](#uso)
-- [Configuración](#configuracion)
-- [Desarrollo](#desarrollo)
-- [Contribuir](#contribuir)
-- [Licencia](#licencia)
-- [Autor](#autor)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+- [Author](#author)
 
-## Requisitos
+## Requirements
 
-- Obsidian v1.0 o superior
-- Una clave de API de OpenAI activa
-- (Opcional) Node.js >= 14 y npm (solo necesario para desarrollo)
+- Obsidian v1.0 or later
+- A valid OpenAI API key
+- (Optional) Node.js >= 14 and npm (only required for development)
 
-## Características
+## Features
 
-- **Chat con IA**: Interactúa con el modelo de OpenAI (por defecto, `GPT-4o`) directamente desde Obsidian.
-- **Creación de Nota Diaria**: Crea y abre automáticamente una nota diaria organizada por año, mes y día.
-- **Integración con el Editor Markdown**: Inserta las respuestas de la IA directamente en el editor de Markdown.
-- **Soporte para KaTeX**: Para fórmulas matemáticas, la IA utiliza la notación de KaTeX con delimitadores adecuados.
-- **Interfaz de Usuario Amigable**: Incluye un panel de chat con una interfaz limpia y controles intuitivos.
+- **AI Chat**: Interact with the OpenAI model (default `GPT-4o`) directly from Obsidian.
+- **Daily Note Creation**: Automatically create and open a daily note organized by year, month, and day.
+- **Markdown Editor Integration**: Insert AI responses directly into the Markdown editor.
+- **KaTeX Support**: For mathematical formulas, the AI uses KaTeX notation with proper delimiters.
+- **User-Friendly Interface**: Includes a chat panel with a clean interface and intuitive controls.
 
-## Instalación
+## Installation
 
-1. Descarga o clona este repositorio en tu equipo:
+1. Download or clone this repository to your local machine:
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone <REPOSITORY_URL>
    ```
-2. Copia la carpeta del plugin al directorio de plugins de tu vault de Obsidian:
+2. Copy the plugin folder to your vault's plugin directory:
    ```bash
-   cp -r mikes-ia-plugin <TU_VAULT>/.obsidian/plugins/
+   cp -r mikes-ia-plugin <YOUR_VAULT>/.obsidian/plugins/
    ```
-3. Abre Obsidian, ve a **Ajustes > Comunidad > Plugins de terceros**, y activa **Mike's IA Plugin**.
-4. (Opcional) Reinicia Obsidian o recarga los plugins para aplicar cambios.
+3. Open Obsidian, go to **Settings > Community Plugins**, and enable **Mike's AI Plugin**.
+4. (Optional) Restart Obsidian or reload plugins to apply changes.
 
-## Uso
+## Usage
 
-### Abrir el Chat de IA
-- Haz clic en el ícono de mensaje (📩) en la barra lateral para abrir el panel de chat.
-- Escribe tu mensaje en el área de entrada y presiona **Enter** (o haz clic en el botón de enviar) para obtener la respuesta de la IA.
-- Si deseas insertar la respuesta en el editor de Markdown, utiliza el botón de transferencia (ícono con flecha).
+### Open the AI Chat
+- Click the message icon (📩) in the sidebar to open the chat panel.
+- Type your message in the input area and press **Enter** (or click the send button) to receive a response from the AI.
+- To insert the response into the Markdown editor, use the transfer button (arrow icon).
 
-### Crear Nota Diaria
-- Haz clic en el ícono de documento (📄) en la barra lateral para crear y abrir automáticamente la nota diaria.
-- La nota se crea en una estructura de carpetas organizada por año, mes y día.
+### Create a Daily Note
+- Click the document icon (📄) in the sidebar to automatically create and open the daily note.
+- The note is created in a folder structure organized by year, month, and day.
 
-## Configuración
+## Configuration
 
-### API Key y Modelo
-- Dirígete a **Ajustes > Plugins > Mike's IA Plugin**.
-- Ingresa tu **API Key** de OpenAI.
-- Selecciona el **modelo** a utilizar (por ejemplo, `GPT-4o` o `o3-mini`).
+### API Key and Model
+- Go to **Settings > Plugins > Mike's AI Plugin**.
+- Enter your **OpenAI API Key**.
+- Select the **model** to use (e.g., `GPT-4o` or `o3-mini`).
 
-> **Nota:** Si no configuras tu API Key, el plugin mostrará un aviso y no se podrán enviar solicitudes a la API de OpenAI.
+> **Note:** If you do not configure your API Key, the plugin will display a warning and requests to the OpenAI API will not be sent.
 
-## Desarrollo
+## Development
 
-### Prerrequisitos
+### Prerequisites
 
 - Node.js >= 14
 - npm
 
-### Instalación de dependencias
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-### Compilar en modo desarrollo
+### Build for Development
 
 ```bash
 npm run dev
 ```
 
-### Construir versión de producción
+### Build for Production
 
 ```bash
 npm run build
 ```
 
-### Estructura del proyecto
+### Project Structure
 
-- **manifest.json**: Define la información básica del plugin (nombre, versión, descripción, etc.).
-- **main.ts**: Contiene la lógica principal del plugin, incluyendo la creación del panel de chat, la integración con la API de OpenAI y la funcionalidad de notas diarias.
-- **styles.css**: Estilos para el panel de chat y botones.
+- **manifest.json**: Defines the basic plugin information (name, version, description, etc.).
+- **main.ts**: Contains the main logic of the plugin, including chat panel creation, OpenAI API integration, and daily note functionality.
+- **styles.css**: Styles for the chat panel and buttons.
 
-## Contribuir
+## Contributing
 
-Las contribuciones son bienvenidas. Si deseas mejorar el plugin, por favor sigue estos pasos:
+Contributions are welcome. If you would like to improve the plugin, please follow these steps:
 
-1. **Clona el repositorio**
-2. **Realiza tus cambios**
-3. **Envía un Pull Request**
+1. **Fork the repository**
+2. **Make your changes**
+3. **Submit a Pull Request**
 
-## Licencia
+## License
 
-Este proyecto está licenciado bajo la [Licencia MIT](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
 
-## Autor
+## Author
 
 **Mike Ballesteros**  
 [https://maballesteros.com](https://maballesteros.com)
 
 ---
 
-¡Disfruta usando Mike's IA Plugin para potenciar tu productividad en Obsidian!
+Enjoy using Mike's AI Plugin to boost your productivity in Obsidian!
