@@ -3,3 +3,4 @@ dist/
 .obsidian/
 .DS_Store
 *.log
+data.json
