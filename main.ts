@@ -183,12 +183,18 @@ export default class ChatPlugin extends Plugin {
  * Vista de chat que utiliza el GPTService del plugin para comunicarse con la API.
  */
 class ChatView extends ItemView {
-	plugin: ChatPlugin;
-	messages: HTMLElement;
+   plugin: ChatPlugin;
+   messages: HTMLElement;
+   // Conversation history including system, user, and assistant messages
+   conversation: { role: string; content: string }[];
+   // Initial system prompt for the conversation
+   static systemPrompt: string = 'Eres un asistente experto en todas las áreas de conocimiento. Para las fórmulas matemáticas siempre empleas la notación de KaTex con delimitadores $$ para displayed formulas y $ para inlines. Generas markdown compatible 100% con Obsidian: tareas, callouts, diagramas mermaid, markmap, etc.';
 
 	constructor(leaf: WorkspaceLeaf, plugin: ChatPlugin) {
 		super(leaf);
 		this.plugin = plugin;
+		// Initialize conversation as empty; system prompt will be added dynamically with context
+		this.conversation = [];
 	}
 
 	getViewType() {
@@ -337,8 +343,9 @@ class ChatView extends ItemView {
 	
 		// Mostrar spinner mientras se espera la respuesta
 		const spinnerContainer = this.messages.createEl('div', { cls: 'bot-message' });
-		spinnerContainer.createEl('div', { cls: 'spinner' });
-	
+       		spinnerContainer.createEl('div', { cls: 'spinner' });
+
+
 		// Obtener contexto desde el editor activo (opcional)
 		const editor = this.plugin.getActiveMarkdownEditor();
 		let contextText = '';
@@ -347,18 +354,31 @@ class ChatView extends ItemView {
 			console.log("Texto del contexto:", contextText);
 		} else {
 			console.log("No se encontró ninguna vista Markdown activa.");
-		}
-	
-		// Crear mensajes para la llamada a GPT
-		const messages = [
-			{ role: 'system', content: 'Eres un asistente experto en todas las áreas de conocimiento. Para las fórmulas matemáticas siempre empleas la notación de KaTex con delimitadores $$ para displayed formulas y $ para inlines. Generas markdown compatible 100% con Obsidian: tareas, callouts, diagramas mermaid, markmap, etc.' },
-			{ role: 'user', content: `Contexto:\n${contextText}\n\nPregunta:\n${userMessage}` }
-		];
+		}	
 
-       // Depurar payload: mostrar en consola lo que se envía a la IA
-       console.log("ChatView.sendMessage: payload:", messages);
-       // Solicitar respuesta a GPT a través del servicio
-       const response = await this.plugin.gptService.fetchResponse(messages);
+        // Reset conversation if initial or on /new command, including adding context
+        const trimmed = userMessage.trim();
+        const shouldReset = trimmed === '/new' || this.conversation.length === 0;
+        if (shouldReset) {
+            this.messages.empty();
+            let systemContent = ChatView.systemPrompt;
+            if (contextText.trim()) {
+                systemContent += `\n\nContexto de la nota:\n${contextText}`;
+            }
+            this.conversation = [{ role: 'system', content: systemContent }];
+            if (trimmed === '/new') {
+                new Notice('Started new conversation');
+                return;
+            }
+        }
+        // Append user message to conversation history
+        this.conversation.push({ role: 'user', content: userMessage });
+		// Debug payload: full conversation
+		console.log("****ChatView.sendMessage: payload:", this.conversation);
+		// Request response from GPT with full conversation
+		const response = await this.plugin.gptService.fetchResponse(this.conversation);
+		// Append assistant response to conversation history
+		this.conversation.push({ role: 'assistant', content: response });
 	
 		// Reemplazar el spinner por la respuesta renderizada
 		spinnerContainer.empty();
@@ -418,7 +438,7 @@ class ChatSettingTab extends PluginSettingTab {
 			.setName('Modelo')
 			.setDesc('Elige el modelo de OpenAI')
 			.addDropdown(dropdown => dropdown
-				.addOptions({ 'o3-mini': 'o3-mini', 'gpt-4o': 'GPT-4o', 'chatgpt-4o-latest': 'ChatGPT' })
+				.addOptions({ 'o3': 'o3', 'o4-mini': 'o4-mini', 'gpt-4.1': 'GPT-4.1', 'chatgpt-4o-latest': 'ChatGPT' })
 				.setValue(this.plugin.settings.model)
 				.onChange(async (value) => {
 					this.plugin.settings.model = value;
